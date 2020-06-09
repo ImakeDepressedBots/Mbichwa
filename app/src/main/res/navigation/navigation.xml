@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/homeFragment">
+
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.color.mbichwa.pages.home.HomeFragment"
+        android:label="fragment_home"
+        tools:layout="@layout/fragment_home" >
+        <action
+            android:id="@+id/action_homeFragment_to_registration_graph"
+            app:destination="@id/registration_graph" />
+    </fragment>
+    <fragment
+        android:id="@+id/signInFragment"
+        android:name="com.color.mbichwa.pages.auth.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" />
+
+
+    <!--    SignUp navigation-->
+    <navigation
+        android:id="@+id/registration_graph"
+        app:startDestination="@id/signUpOneFragment">
+
+
+        <fragment
+            android:id="@+id/signUpOneFragment"
+            android:name="com.color.mbichwa.pages.auth.SignUpOneFragment"
+            android:label="fragment_sign_up_one"
+            tools:layout="@layout/fragment_sign_up_one" />
+
+        <fragment
+            android:id="@+id/signUpTwoFragment"
+            android:name="com.color.mbichwa.pages.auth.SignUpTwoFragment"
+            android:label="fragment_sign_up_two"
+            tools:layout="@layout/fragment_sign_up_two" />
+
+
+    </navigation>
+
+
+</navigation>

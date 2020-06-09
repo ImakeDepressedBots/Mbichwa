@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "299274704619",
+    "firebase_url": "https://mbichwa-72439.firebaseio.com",
+    "project_id": "mbichwa-72439",
+    "storage_bucket": "mbichwa-72439.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:299274704619:android:73f36e5847252cb8ed90ae",
+        "android_client_info": {
+          "package_name": "com.color.mbichwa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "299274704619-t12uu9tdap77o45b46nmhsvur9j43ifb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM8GhqEgu5Uts3DUrEoqTIxSyX_mwqCz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "299274704619-t12uu9tdap77o45b46nmhsvur9j43ifb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
