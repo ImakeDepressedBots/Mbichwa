@@ -26,12 +26,15 @@
         android:id="@+id/registration_graph"
         app:startDestination="@id/signUpOneFragment">
 
-
         <fragment
             android:id="@+id/signUpOneFragment"
             android:name="com.color.mbichwa.pages.auth.SignUpOneFragment"
             android:label="fragment_sign_up_one"
-            tools:layout="@layout/fragment_sign_up_one" />
+            tools:layout="@layout/fragment_sign_up_one" >
+            <action
+                android:id="@+id/action_signUpOneFragment_to_signUpTwoFragment"
+                app:destination="@id/signUpTwoFragment" />
+        </fragment>
 
         <fragment
             android:id="@+id/signUpTwoFragment"

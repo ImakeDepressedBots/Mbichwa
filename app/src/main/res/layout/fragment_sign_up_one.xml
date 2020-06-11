@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".pages.auth.SignUpOneFragment">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +17,7 @@
             android:layout_marginTop="32dp"
             android:fontFamily="@font/roboto_medium"
             android:text="@string/create_text"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -33,6 +32,7 @@
             android:layout_marginTop="8dp"
             android:fontFamily="@font/roboto_medium"
             android:text="@string/account_text"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="50sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="24dp"
             android:hint="@string/name_hint_text"
             android:inputType="textPersonName"
-            android:textSize="35sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView2"
@@ -65,13 +65,13 @@
             android:autofillHints="Name"
             android:hint="@string/phone_number_hint_text"
             android:inputType="phone"
-            android:textSize="35sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
 
         <EditText
-            android:id="@+id/editText"
+            android:id="@+id/emailEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
@@ -80,7 +80,7 @@
             android:autofillHints="Name"
             android:hint="@string/email_address_hint_text"
             android:inputType="textEmailAddress"
-            android:textSize="35sp"
+            android:textSize="30sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/phoneEditText" />
@@ -90,13 +90,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/next_text"
+            android:textAlignment="center"
             app:backgroundTint="@color/colorAccent"
+            android:elevation="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editText" />
+            app:layout_constraintTop_toBottomOf="@+id/emailEditText" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</FrameLayout>
+</layout>

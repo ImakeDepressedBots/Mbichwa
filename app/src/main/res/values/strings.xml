@@ -8,4 +8,7 @@
     <string name="phone_number_hint_text">Phone Number</string>
     <string name="email_address_hint_text">Email Address</string>
     <string name="next_text">Next</string>
+    <string name="password_hint_text">Password</string>
+    <string name="confirm_password_hint_text">Confirm Password</string>
+    <string name="done_text">Done</string>
 </resources>
