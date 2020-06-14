@@ -33,7 +33,6 @@ class MainActivity : AppCompatActivity() {
         }else if (savedVersionCode == DOESNT_EXIST){
             // This is a new install (or the user cleared the shared preferences)
             findNavController(R.id.myNavHostFragment).navigate(R.id.action_homeFragment_to_registration_graph)
-            TODO()
         } else if (currentVersionCode > savedVersionCode){
             //This is an upgrade
             return

@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentSignUpTwoBinding
+import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -56,6 +57,7 @@ class SignUpTwoFragment : Fragment() {
 
     private fun createUser(){
         val navController = findNavController()
+        FirebaseApp.initializeApp(context!!.applicationContext)
         auth = Firebase.auth
         val email  = viewModel.email.value.toString()
         auth.createUserWithEmailAndPassword(email,binding.passwordConfirmEditText.text.toString())
