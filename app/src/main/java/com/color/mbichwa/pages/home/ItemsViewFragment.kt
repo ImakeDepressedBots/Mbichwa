@@ -5,9 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import com.color.mbichwa.R
-import com.color.mbichwa.databinding.FragmentHomeBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -16,16 +14,13 @@ private const val ARG_PARAM2 = "param2"
 
 /**
  * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
+ * Use the [ItemsViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
+class ItemsViewFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-
-    private lateinit var binding: FragmentHomeBinding
-    lateinit var categoryData: ArrayList<Category>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,14 +35,7 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
-        getCategoryData()
-        return binding.root
-    }
-
-    private fun getCategoryData(){
-        categoryData = ArrayList<Category>()
-
+        return inflater.inflate(R.layout.fragment_items_view, container, false)
     }
 
     companion object {
@@ -57,20 +45,16 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
          *
          * @param param1 Parameter 1.
          * @param param2 Parameter 2.
-         * @return A new instance of fragment HomeFragment.
+         * @return A new instance of fragment ItemsViewFragment.
          */
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            HomeFragment().apply {
+            ItemsViewFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
-    }
-
-    override fun onCategorySelected(category: Category) {
-        TODO("Not yet implemented")
     }
 }
