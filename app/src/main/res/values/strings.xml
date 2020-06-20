@@ -11,4 +11,6 @@
     <string name="password_hint_text">Password</string>
     <string name="confirm_password_hint_text">Confirm Password</string>
     <string name="done_text">Done</string>
+    <string name="favourite_icon_title">Favourite</string>
+    <string name="search_item_title_text">Search</string>
 </resources>

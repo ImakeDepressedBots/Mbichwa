@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentHomeBinding
+import com.color.mbichwa.pages.home.models.Category
+import com.google.android.material.bottomappbar.BottomAppBar
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -33,6 +35,7 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        setHasOptionsMenu(true)
     }
 
     override fun onCreateView(
@@ -41,9 +44,30 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+        val bottomBar:BottomAppBar = binding.bottomBar
+        bottomBar.replaceMenu(R.menu.bottom_app_bar_menu)
+        bottomBar.setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.app_bar_fav -> {
+                    true
+                }
+                R.id.app_bar_search -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        bottomBar.setNavigationOnClickListener {
+
+        }
         getCategoryData()
         return binding.root
     }
+
+
+
+
+
 
     private fun getCategoryData(){
         categoryData = ArrayList<Category>()

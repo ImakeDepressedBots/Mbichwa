@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.color.mbichwa.R
+import com.color.mbichwa.pages.home.models.Category
 import java.util.ArrayList
 
 class CategoriesAdapter(private var categoryData: ArrayList<Category>, onCategorySelectedListener: OnCategorySelectedListener): RecyclerView.Adapter<CategoriesAdapter.CategoryViewHolder>() {

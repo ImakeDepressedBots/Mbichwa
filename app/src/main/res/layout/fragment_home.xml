@@ -48,7 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:fabAlignmentMode="end"
-            android:layout_gravity="bottom"/>
+            android:layout_gravity="bottom"
+            app:navigationIcon="@drawable/ic_menu_icon"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/cartFab"
