@@ -13,12 +13,30 @@
         <action
             android:id="@+id/action_homeFragment_to_registration_graph"
             app:destination="@id/registration_graph" />
+        <action
+            android:id="@+id/action_homeFragment_to_itemsViewFragment"
+            app:destination="@id/itemsViewFragment" >
+            <argument
+                android:name="categoryName"
+                app:argType="string"/>
+        </action>
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
         android:name="com.color.mbichwa.pages.auth.SignInFragment"
         android:label="fragment_sign_in"
         tools:layout="@layout/fragment_sign_in" />
+    <fragment
+        android:id="@+id/itemsViewFragment"
+        android:name="com.color.mbichwa.pages.home.ItemsViewFragment"
+        android:label="fragment_products_view"
+        tools:layout="@layout/fragment_products_view">
+        <argument
+            android:name="categoryName"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+
 
 
     <!--    SignUp navigation-->
@@ -44,6 +62,7 @@
 
 
     </navigation>
+
 
 
 </navigation>

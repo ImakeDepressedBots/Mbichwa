@@ -1,15 +1,23 @@
 package com.color.mbichwa.pages.home
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentHomeBinding
 import com.color.mbichwa.pages.home.models.Category
 import com.google.android.material.bottomappbar.BottomAppBar
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
+import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +36,7 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
 
     private lateinit var binding: FragmentHomeBinding
     lateinit var categoryData: ArrayList<Category>
+    private lateinit var adapter: CategoriesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,8 +79,25 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
 
 
     private fun getCategoryData(){
+        Timber.e("Heyyy")
         categoryData = ArrayList<Category>()
+        val db = Firebase.firestore
+        db.collection("categories")
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                for (document in querySnapshot){
+                    categoryData.add(document.toObject())
+                    Log.e("Hello",categoryData.get(0).categoryName)
+                }
+                adapter = CategoriesAdapter(categoryData,this)
+                binding.categoriesRecycler.adapter = adapter
+            }
+    }
 
+    override fun onCategorySelected(category: Category) {
+        Toast.makeText(context,category.categoryName,Toast.LENGTH_LONG).show()
+        val actionProductFragment = HomeFragmentDirections.actionHomeFragmentToItemsViewFragment(category.categoryName)
+        findNavController().navigate(actionProductFragment)
     }
 
     companion object {
@@ -94,7 +120,5 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
             }
     }
 
-    override fun onCategorySelected(category: Category) {
-        TODO("Not yet implemented")
-    }
+
 }

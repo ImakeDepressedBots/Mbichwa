@@ -11,6 +11,16 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        val navController = findNavController(R.id.myNavHostFragment)
+        navController.addOnDestinationChangedListener { controller, destination, arguments ->
+            when(destination.id){
+
+                R.id.signUpOneFragment -> supportActionBar?.hide()
+                R.id.signUpTwoFragment -> supportActionBar?.hide()
+                R.id.homeFragment -> supportActionBar?.hide()
+            }
+        }
         checkFirstRun()
     }
 
