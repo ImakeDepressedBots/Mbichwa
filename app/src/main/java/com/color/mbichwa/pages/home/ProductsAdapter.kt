@@ -7,10 +7,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
+import com.bumptech.glide.request.RequestOptions
 import com.color.mbichwa.R
 import com.color.mbichwa.pages.home.models.Product
 
-class ProductsAdapter(var productsData:ArrayList<Product>): RecyclerView.Adapter<ProductsAdapter.ItemViewHolder>() {
+class ProductsAdapter(var productsData:ArrayList<Product>,onProductSelectedListener: OnProductSelectedListener): RecyclerView.Adapter<ProductsAdapter.ItemViewHolder>() {
+
+    interface OnProductSelectedListener{
+        fun onProductSelected(product: Product)
+    }
+
+    val listener:OnProductSelectedListener = onProductSelectedListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
@@ -23,7 +31,7 @@ class ProductsAdapter(var productsData:ArrayList<Product>): RecyclerView.Adapter
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val item = productsData[position]
-        holder.bind(item)
+        holder.bind(item,listener)
     }
 
     class ItemViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){
@@ -33,7 +41,7 @@ class ProductsAdapter(var productsData:ArrayList<Product>): RecyclerView.Adapter
         val productStartPriceTextView:TextView = itemView.findViewById(R.id.productStartPriceTextView)
         val productDisplayOptionTextView:TextView = itemView.findViewById(R.id.productDisplayOptionTextView)
 
-        fun bind(item:Product){
+        fun bind(item:Product,listener: OnProductSelectedListener){
 
             Glide.with(itemView.context)
                 .load(item.productImageUrl)
@@ -42,6 +50,10 @@ class ProductsAdapter(var productsData:ArrayList<Product>): RecyclerView.Adapter
             productNameTextView.text = item.productName
             productStartPriceTextView.text = item.productDisplayPrice
             productDisplayOptionTextView.text = item.productOptions.get(0)
+
+            itemView.setOnClickListener {
+                listener.onProductSelected(item)
+            }
         }
     }
 

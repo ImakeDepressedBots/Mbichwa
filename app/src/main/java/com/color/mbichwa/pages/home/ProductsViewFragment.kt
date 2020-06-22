@@ -5,10 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentProductsViewBinding
 import com.color.mbichwa.pages.home.models.Product
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -23,7 +27,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ItemsViewFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ItemsViewFragment : Fragment() {
+class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener{
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -49,27 +53,47 @@ class ItemsViewFragment : Fragment() {
         // Inflate the layout for this fragment
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_products_view,container,false)
 
+        val bottomAppBar:BottomAppBar = binding.bottomBar
+        bottomAppBar.replaceMenu(R.menu.bottom_app_bar_menu)
+        bottomAppBar.setOnMenuItemClickListener { item ->
+            when(item.itemId){
+                R.id.app_bar_fav -> {
+                    true
+                }
+                R.id.app_bar_search -> {
+                    true
+                }
+                else -> false
+            }
+        }
+        bottomAppBar.setNavigationOnClickListener {
+
+        }
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         categoryName = arguments?.get("categoryName") as String
+        activity?.actionBar?.title = categoryName
+//        supportActionBar?.title = categoryName
+        Toast.makeText(context,categoryName,Toast.LENGTH_SHORT).show()
         getProductsData()
     }
 
     private fun getProductsData(){
-        productsData = ArrayList()
+        productsData = ArrayList<Product>()
         val db  = Firebase.firestore
         db.collection("products")
             .whereEqualTo("productCategory", categoryName)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 for(document in querySnapshot){
-                    productsData.add(document.toObject())
+                    productsData.add(document.toObject<Product>())
                 }
 
-                adapter = ProductsAdapter(productsData)
+                adapter = ProductsAdapter(productsData,this)
                 binding.itemsRecycler.adapter = adapter
             }
     }
@@ -92,5 +116,11 @@ class ItemsViewFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onProductSelected(product: Product) {
+        Toast.makeText(context,product.productId,Toast.LENGTH_SHORT).show()
+        val actionMainProductFragment = ItemsViewFragmentDirections.actionItemsViewFragmentToProductViewMainFragment(product.productId)
+        findNavController().navigate(actionMainProductFragment)
     }
 }

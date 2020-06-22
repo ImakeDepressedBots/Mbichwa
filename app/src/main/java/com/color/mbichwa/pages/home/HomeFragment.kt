@@ -73,11 +73,6 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
         return binding.root
     }
 
-
-
-
-
-
     private fun getCategoryData(){
         Timber.e("Heyyy")
         categoryData = ArrayList<Category>()

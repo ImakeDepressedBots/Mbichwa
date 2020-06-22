@@ -35,7 +35,26 @@
             android:name="categoryName"
             app:argType="string"
             android:defaultValue=""/>
+        <action
+            android:id="@+id/action_itemsViewFragment_to_productViewMainFragment"
+            app:destination="@id/productViewMainFragment">
+            <argument
+                android:name="productId"
+                app:argType="string"/>
+        </action>
     </fragment>
+
+    <fragment
+        android:id="@+id/productViewMainFragment"
+        android:name="com.color.mbichwa.pages.home.ProductViewMainFragment"
+        android:label="fragment_product_view_main"
+        tools:layout="@layout/fragment_product_view_main" >
+        <argument
+            android:name="productId"
+            app:argType="string"
+            android:defaultValue=""/>
+    </fragment>
+
 
 
 
@@ -62,7 +81,6 @@
 
 
     </navigation>
-
 
 
 </navigation>
