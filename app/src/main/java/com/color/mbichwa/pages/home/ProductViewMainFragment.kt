@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentProductViewMainBinding
@@ -40,6 +41,13 @@ class ProductViewMainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_product_view_main, container, false)
+        val quantityPicker:NumberPicker = binding.quantityPicker
+        quantityPicker.minValue = 1
+        quantityPicker.maxValue = 10
+        quantityPicker.wrapSelectorWheel = true
+        quantityPicker.setOnValueChangedListener { picker, oldVal, newVal ->
+            binding.priceTextView.text = "KES ${newVal*100}"
+        }
         return binding.root
     }
 
