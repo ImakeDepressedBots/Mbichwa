@@ -16,4 +16,6 @@
     <string name="gummies_in_space_text">Gummies in space</string>
     <string name="price_example_text">$19.84</string>
     <string name="_1_packet_text">1 Packet</string>
+    <string name="checkout_text">Checkout</string>
+    <string name="total_text">Total</string>
 </resources>

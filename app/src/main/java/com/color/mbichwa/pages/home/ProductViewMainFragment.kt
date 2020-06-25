@@ -7,8 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.NumberPicker
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentProductViewMainBinding
+import com.color.mbichwa.pages.home.models.OrderedProduct
+import com.color.mbichwa.pages.home.models.Product
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,6 +35,11 @@ class ProductViewMainFragment : Fragment() {
 
     private lateinit var binding: FragmentProductViewMainBinding
 
+    private lateinit var productId:String
+    private lateinit var orderedProduct:OrderedProduct
+    private lateinit var viewedProduct:Product
+    private lateinit var cartViewModel: CartViewModel
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -41,14 +54,50 @@ class ProductViewMainFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_product_view_main, container, false)
+        cartViewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+        orderedProduct = OrderedProduct()
         val quantityPicker:NumberPicker = binding.quantityPicker
         quantityPicker.minValue = 1
         quantityPicker.maxValue = 10
         quantityPicker.wrapSelectorWheel = true
+        orderedProduct.orderedProductQuantity = 1
         quantityPicker.setOnValueChangedListener { picker, oldVal, newVal ->
             binding.priceTextView.text = "KES ${newVal*100}"
+            orderedProduct.orderedProductQuantity = newVal
+        }
+
+        binding.addToCartFab.setOnClickListener {
+            addItemToCart()
+            findNavController().popBackStack()
+            findNavController().navigateUp()
         }
         return binding.root
+    }
+
+    private fun addItemToCart() {
+        cartViewModel.addItemToCart(orderedProduct)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        productId = arguments?.get("productId") as String
+        getViewedProduct()
+    }
+
+    private fun getViewedProduct() {
+        viewedProduct = Product()
+        val db  = Firebase.firestore
+        db.collection("products").document(productId).get()
+            .addOnSuccessListener { documentSnapshot ->
+                if (documentSnapshot != null){
+                    viewedProduct = documentSnapshot.toObject<Product>()!!
+
+                }
+            }
+        orderedProduct.orderedProductImageUrl = viewedProduct.productImageUrl
+        orderedProduct.orderedProductName = viewedProduct.productName
+        orderedProduct.orderedProductPrice = viewedProduct.productDisplayPrice.toDouble()
+        binding.productNameTextView.text = orderedProduct.orderedProductName
     }
 
     companion object {
