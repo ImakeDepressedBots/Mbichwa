@@ -1,4 +1,4 @@
-package com.color.mbichwa.pages.home
+package com.color.mbichwa.pages.home.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -17,7 +17,9 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
-        return CartItemViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_cart_item,parent,false))
+        return CartItemViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.recycler_cart_item, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {
@@ -31,12 +33,11 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
 
     class CartItemViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
         val cartItemImageView:ImageView = itemView.findViewById(R.id.itemInCartImageView)
-        val minusImageButton:ImageButton = itemView.findViewById(R.id.minusImageButton)
-        val plusImageButton:ImageButton = itemView.findViewById(R.id.addImageButton)
+
         val removeImageButton:ImageButton = itemView.findViewById(R.id.removeItemImageButton)
         val itemInCartQuantityTextView:TextView = itemView.findViewById(R.id.itemInCartQuantityTextView)
         val itemInCartNameTextView:TextView = itemView.findViewById(R.id.itemInCartNameTextView)
-        val itemInCartOptionTextView:TextView = itemView.findViewById(R.id.itemInCartOptionTextView)
+//        val itemInCartOptionTextView:TextView = itemView.findViewById(R.id.itemInCartOptionTextView)
         val itemInCartPriceTextView:TextView = itemView.findViewById(R.id.itemInCartPriceTextView)
 
         fun bind(item:OrderedProduct){
@@ -45,7 +46,7 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
                 .into(cartItemImageView)
 
             itemInCartNameTextView.text = item.orderedProductName
-            itemInCartOptionTextView.text = item.orderedProductOption
+//            itemInCartOptionTextView.text = item.orderedProductOption
             itemInCartPriceTextView.text = item.orderedProductPrice.toString()
             itemInCartQuantityTextView.text = item.orderedProductQuantity.toString()
         }

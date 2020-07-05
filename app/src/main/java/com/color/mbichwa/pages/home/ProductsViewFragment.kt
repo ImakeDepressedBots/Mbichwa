@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentProductsViewBinding
+import com.color.mbichwa.pages.home.adapters.ProductsAdapter
 import com.color.mbichwa.pages.home.models.Product
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.firestore.ktx.firestore
@@ -34,7 +34,7 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
 
     private lateinit var binding: FragmentProductsViewBinding
     lateinit var productsData:ArrayList<Product>
-    private lateinit var adapter:ProductsAdapter
+    private lateinit var adapter: ProductsAdapter
 
     private lateinit var categoryName:String
 
@@ -69,6 +69,10 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
         bottomAppBar.setNavigationOnClickListener {
 
         }
+        binding.cartFab.setOnClickListener {
+            val actionCartFragment = ItemsViewFragmentDirections.actionItemsViewFragmentToCartFragment()
+            findNavController().navigate(actionCartFragment)
+        }
         return binding.root
     }
 
@@ -78,7 +82,7 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
         categoryName = arguments?.get("categoryName") as String
         activity?.actionBar?.title = categoryName
 //        supportActionBar?.title = categoryName
-        Toast.makeText(context,categoryName,Toast.LENGTH_SHORT).show()
+//        Toast.makeText(context,categoryName,Toast.LENGTH_SHORT).show()
         getProductsData()
     }
 
@@ -93,7 +97,10 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
                     productsData.add(document.toObject<Product>())
                 }
 
-                adapter = ProductsAdapter(productsData,this)
+                adapter = ProductsAdapter(
+                    productsData,
+                    this
+                )
                 binding.itemsRecycler.adapter = adapter
             }
     }

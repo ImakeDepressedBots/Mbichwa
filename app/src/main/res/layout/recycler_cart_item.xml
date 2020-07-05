@@ -3,12 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/itemInCartImageView"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/itemInCartQuantityTextView"
         app:layout_constraintHorizontal_bias="0.5"
@@ -17,30 +21,13 @@
         app:srcCompat="@drawable/ic_cart_icon" />
 
     <ImageButton
-        android:id="@+id/minusImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_minus_icon"
-        app:layout_constraintBottom_toBottomOf="@+id/itemInCartImageView"
-        app:layout_constraintEnd_toEndOf="@+id/addImageButton"
-        app:layout_constraintStart_toStartOf="@+id/addImageButton"
-        app:layout_constraintTop_toBottomOf="@+id/addImageButton" />
-
-    <ImageButton
-        android:id="@+id/addImageButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_add_icon"
-        app:layout_constraintEnd_toStartOf="@+id/itemInCartNameTextView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/itemInCartQuantityTextView"
-        app:layout_constraintTop_toTopOf="@+id/itemInCartImageView" />
-
-    <ImageButton
         android:id="@+id/removeItemImageButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:src="@drawable/ic_bin_icon"
+        android:background="@null"
         app:layout_constraintBottom_toBottomOf="@+id/itemInCartImageView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -51,11 +38,12 @@
         android:id="@+id/itemInCartQuantityTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
         android:text="3"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         app:layout_constraintBottom_toBottomOf="@+id/itemInCartImageView"
-        app:layout_constraintEnd_toStartOf="@+id/addImageButton"
+        app:layout_constraintEnd_toStartOf="@+id/itemInCartNameTextView"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/itemInCartImageView"
         app:layout_constraintTop_toTopOf="@+id/itemInCartImageView"
@@ -65,15 +53,16 @@
         android:id="@+id/itemInCartNameTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:maxWidth="150dp"
         android:text="Space Gummies with extra gummies"
         android:textAlignment="center"
-        app:layout_constraintBottom_toTopOf="@+id/itemInCartOptionTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/itemInCartImageView"
         app:layout_constraintEnd_toStartOf="@+id/itemInCartPriceTextView"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/addImageButton"
-        app:layout_constraintTop_toTopOf="@id/itemInCartImageView" />
+        app:layout_constraintStart_toEndOf="@+id/itemInCartQuantityTextView"
+        app:layout_constraintTop_toTopOf="@+id/itemInCartImageView" />
 
     <TextView
         android:id="@+id/itemInCartPriceTextView"
@@ -82,27 +71,25 @@
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
         android:text="@string/price_example_text"
+        android:textAppearance="@style/TextAppearance.AppCompat.Title"
         app:layout_constraintBottom_toBottomOf="@+id/itemInCartImageView"
         app:layout_constraintEnd_toStartOf="@+id/removeItemImageButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/itemInCartNameTextView"
         app:layout_constraintTop_toTopOf="@+id/itemInCartImageView" />
 
-    <TextView
-        android:id="@+id/itemInCartOptionTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center|center_vertical"
-        android:layout_margin="10dp"
-        android:fontFamily="@font/roboto_medium"
-        android:text="500g"
-        android:textColor="?android:attr/textColorPrimary"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="@id/itemInCartImageView"
-        app:layout_constraintEnd_toEndOf="@+id/itemInCartNameTextView"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="@+id/itemInCartNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/itemInCartNameTextView" />
+<!--    <TextView-->
+<!--        android:id="@+id/itemInCartOptionTextView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center|center_vertical"-->
+<!--        android:layout_margin="10dp"-->
+<!--        android:fontFamily="@font/roboto_medium"-->
+<!--        android:text="500g"-->
+<!--        android:textColor="?android:attr/textColorPrimary"-->
+<!--        android:textSize="15sp"-->
+<!--        tools:layout_editor_absoluteX="215dp"-->
+<!--        tools:layout_editor_absoluteY="606dp" />-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

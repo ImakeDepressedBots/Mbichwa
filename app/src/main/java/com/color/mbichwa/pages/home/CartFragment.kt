@@ -6,12 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentCartBinding
+import com.color.mbichwa.pages.home.adapters.CartItemsAdapter
 import com.color.mbichwa.pages.home.models.OrderedProduct
+import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -29,8 +30,8 @@ class CartFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentCartBinding
-    private lateinit var viewModel: CartViewModel
-    private lateinit var cartItems:List<OrderedProduct>
+    private val viewModel: CartViewModel by activityViewModels()
+    private lateinit var cartItems:ArrayList<OrderedProduct>
     private lateinit var cartAdapter: CartItemsAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +40,8 @@ class CartFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+//        viewModel = ViewModelProvider(this).get(CartViewModel::class.java)
+
     }
 
     override fun onCreateView(
@@ -47,19 +50,51 @@ class CartFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_cart,container,false)
-        viewModel = ViewModelProviders.of(this).get(CartViewModel::class.java)
-        cartItems = emptyList()
-        viewModel.cartItems.observe(viewLifecycleOwner, Observer {
-            cartItems = it
-        })
-        var prices:List<Double> = emptyList()
-        for (cartItem in cartItems){
-            prices.plus(cartItem.orderedProductPrice)
+//        Timber.e("This is it")
+//        cartItems = emptyList()
+//        viewModel.cartItems.observe(viewLifecycleOwner, Observer {
+//            cartItems = it
+//        })
+
+        cartItems = ArrayList()
+        binding.extendedFloatingActionButton.setOnClickListener {
+
         }
-        val totalPrice:Double = prices.sum()
-        cartAdapter = CartItemsAdapter(cartItems)
-        binding.cartItemsRecyclerView.adapter = cartAdapter
+
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+//        cartItems = viewModel.cartItems.value!!
+//        Timber.e(cartItems[0].orderedProductName)
+        viewModel.cartItems.observe(viewLifecycleOwner, Observer {
+            Timber.e("This is it")
+            if (it != null){
+                cartItems = it
+                Timber.e("This is it")
+                var prices: List<Double> = emptyList()
+
+                for (cartItem in cartItems) {
+                    prices.plus(cartItem.orderedProductPrice)
+                }
+                val totalPrice: Double = prices.sum()
+                binding.totalValueTextView.text = totalPrice.toString()
+                cartAdapter =
+                    CartItemsAdapter(
+                        cartItems
+                    )
+                binding.cartItemsRecyclerView.adapter = cartAdapter
+            }else {
+                Timber.e("There are no items in the viewModel :|")
+            }
+        })
+
+    }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
     }
 
     companion object {

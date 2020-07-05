@@ -8,10 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentHomeBinding
+import com.color.mbichwa.pages.home.adapters.CategoriesAdapter
 import com.color.mbichwa.pages.home.models.Category
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.firestore.ktx.firestore
@@ -29,7 +29,8 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
+class HomeFragment : Fragment() ,
+    CategoriesAdapter.OnCategorySelectedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -70,6 +71,10 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
 
         }
         getCategoryData()
+        binding.cartFab.setOnClickListener {
+            val actionCartFragment = HomeFragmentDirections.actionHomeFragmentToCartFragment()
+            findNavController().navigate(actionCartFragment)
+        }
         return binding.root
     }
 
@@ -84,7 +89,11 @@ class HomeFragment : Fragment() ,CategoriesAdapter.OnCategorySelectedListener {
                     categoryData.add(document.toObject())
                     Log.e("Hello",categoryData.get(0).categoryName)
                 }
-                adapter = CategoriesAdapter(categoryData,this)
+                adapter =
+                    CategoriesAdapter(
+                        categoryData,
+                        this
+                    )
                 binding.categoriesRecycler.adapter = adapter
             }
     }

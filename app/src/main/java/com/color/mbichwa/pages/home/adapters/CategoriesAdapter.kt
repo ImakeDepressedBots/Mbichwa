@@ -1,4 +1,4 @@
-package com.color.mbichwa.pages.home
+package com.color.mbichwa.pages.home.adapters
 
 import android.view.LayoutInflater
 import android.view.View
@@ -18,10 +18,13 @@ class CategoriesAdapter(private var categoryData: ArrayList<Category>, onCategor
         fun onCategorySelected(category: Category)
     }
 
-    val listener:OnCategorySelectedListener = onCategorySelectedListener
+    val listener: OnCategorySelectedListener = onCategorySelectedListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryViewHolder {
-        return CategoryViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.recycler_category_item,parent,false))
+        return CategoryViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.recycler_category_item, parent, false)
+        )
     }
 
     override fun getItemCount(): Int {

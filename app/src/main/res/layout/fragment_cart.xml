@@ -8,17 +8,36 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="Cart"
+            android:textAlignment="center"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            android:textSize="30sp"
+            app:layout_constraintBottom_toTopOf="@+id/cartItemsRecyclerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/cartItemsRecyclerView"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
+            android:layout_marginBottom="24dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:layout_constraintBottom_toTopOf="@+id/totalTextTextView"
+            app:layout_constraintBottom_toTopOf="@+id/totalValueTextView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView3"
             app:spanCount="1" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -36,8 +55,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="24dp"
+            android:layout_marginBottom="24dp"
             android:text="@string/total_text"
-            app:layout_constraintBaseline_toBaselineOf="@+id/totalValueTextView"
+            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
@@ -46,17 +66,14 @@
             android:id="@+id/totalValueTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/roboto_medium"
             android:text="@string/price_example_text"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton"
+            app:layout_constraintBaseline_toBaselineOf="@+id/totalTextTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cartItemsRecyclerView"
-            app:layout_constraintVertical_bias="0.0" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

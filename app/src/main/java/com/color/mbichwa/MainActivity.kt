@@ -18,6 +18,8 @@ class MainActivity : AppCompatActivity() {
 
                 R.id.signUpOneFragment -> supportActionBar?.hide()
                 R.id.signUpTwoFragment -> supportActionBar?.hide()
+                R.id.cartFragment -> supportActionBar?.hide()
+                R.id.productViewMainFragment -> supportActionBar?.hide()
             }
         }
         checkFirstRun()

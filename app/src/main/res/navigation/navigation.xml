@@ -20,6 +20,9 @@
                 android:name="categoryName"
                 app:argType="string"/>
         </action>
+        <action
+            android:id="@+id/action_homeFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
     <fragment
         android:id="@+id/signInFragment"
@@ -42,6 +45,9 @@
                 android:name="productId"
                 app:argType="string"/>
         </action>
+        <action
+            android:id="@+id/action_itemsViewFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
 
     <fragment
@@ -53,6 +59,9 @@
             android:name="productId"
             app:argType="string"
             android:defaultValue=""/>
+        <action
+            android:id="@+id/action_productViewMainFragment_to_cartFragment"
+            app:destination="@id/cartFragment" />
     </fragment>
 
 
@@ -81,6 +90,11 @@
 
 
     </navigation>
+    <fragment
+        android:id="@+id/cartFragment"
+        android:name="com.color.mbichwa.pages.home.CartFragment"
+        android:label="fragment_cart"
+        tools:layout="@layout/fragment_cart" />
 
 
 </navigation>
