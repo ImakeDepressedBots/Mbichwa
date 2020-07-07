@@ -4,6 +4,7 @@
     android:id="@+id/linearLayout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginEnd="20dp"
     android:background="@drawable/product_option_background">
 
     <TextView
@@ -11,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center|center_vertical"
-        android:layout_margin="5dp"
+        android:layout_margin="7dp"
         android:fontFamily="@font/roboto_medium"
         android:text="1000ml"
         android:textColor="?android:attr/textColorPrimary"

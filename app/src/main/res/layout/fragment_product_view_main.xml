@@ -22,19 +22,25 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cardView2"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
+                    android:layout_height="300dp"
                     app:layout_constraintBottom_toTopOf="@+id/productNameTextView"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.5"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent">
 
-                    <ImageView
-                        android:id="@+id/productImageView"
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/displayImagesViewPager"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:scaleType="fitXY" />
+                        android:layout_height="match_parent" />
 
+                    <LinearLayout
+                        android:id="@+id/slider_dots"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="12dp"
+                        android:layout_gravity="bottom|center_horizontal"
+                        android:orientation="horizontal" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -53,6 +59,17 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
+
+                <TextView
+                    android:id="@+id/productOptionTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:text="500g"
+                    app:layout_constraintBaseline_toBaselineOf="@+id/productNameTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toEndOf="@+id/productNameTextView" />
 
                 <TextView
                     android:id="@+id/priceTextView"
@@ -121,7 +138,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="0dp"
                     android:layout_marginBottom="8dp"
                     android:text="About"
                     android:textAppearance="@style/TextAppearance.AppCompat.Headline"
@@ -137,7 +154,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
                     android:layout_marginEnd="16dp"
-                    android:layout_marginBottom="32dp"
+                    android:layout_marginBottom="64dp"
                     android:text="Something something something something something"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -172,28 +189,28 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
         </ScrollView>
 
-<!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
-<!--        android:id="@+id/extended_fab"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginBottom="16dp"-->
-<!--        android:contentDescription=""-->
-<!--        android:layout_gravity="bottom|center"-->
-<!--        android:text="Add To Cart"-->
-<!--        app:icon="@drawable/ic_add_cart_icon"-->
-<!--        app:layout_constraintBottom_toBottomOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent"-->
-<!--        app:layout_constraintVertical_bias="1.0" />-->
+        <!--    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton-->
+        <!--        android:id="@+id/extended_fab"-->
+        <!--        android:layout_width="wrap_content"-->
+        <!--        android:layout_height="wrap_content"-->
+        <!--        android:layout_marginBottom="16dp"-->
+        <!--        android:contentDescription=""-->
+        <!--        android:layout_gravity="bottom|center"-->
+        <!--        android:text="Add To Cart"-->
+        <!--        app:icon="@drawable/ic_add_cart_icon"-->
+        <!--        app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--        app:layout_constraintEnd_toEndOf="parent"-->
+        <!--        app:layout_constraintStart_toStartOf="parent"-->
+        <!--        app:layout_constraintTop_toTopOf="parent"-->
+        <!--        app:layout_constraintVertical_bias="1.0" />-->
 
         <com.google.android.material.bottomappbar.BottomAppBar
             android:id="@+id/bottomBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:fabAlignmentMode="end"
             android:layout_gravity="bottom"
-            app:navigationIcon="@drawable/ic_menu_icon"/>
+            app:fabAlignmentMode="end"
+            app:navigationIcon="@drawable/ic_menu_icon" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/addToCartFab"
@@ -204,9 +221,6 @@
             app:layout_anchor="@id/bottomBar" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-
-
 
 
 </layout>

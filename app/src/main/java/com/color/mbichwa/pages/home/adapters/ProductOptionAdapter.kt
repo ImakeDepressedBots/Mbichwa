@@ -39,6 +39,10 @@ class ProductOptionAdapter(private var optionsData: ArrayList<ProductOption>, on
 
         fun bind(item:ProductOption,listener: OnProductOptionSelectedListener){
             productOptionNameTextView.text = item.productOptionName
+
+            itemView.setOnClickListener {
+                listener.onProductOptionSelected(item)
+            }
         }
 
     }

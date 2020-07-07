@@ -41,7 +41,7 @@
             app:spanCount="1" />
 
         <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/extendedFloatingActionButton"
+            android:id="@+id/checkoutExtendedFloatingActionButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
@@ -57,7 +57,8 @@
             android:layout_marginStart="24dp"
             android:layout_marginBottom="24dp"
             android:text="@string/total_text"
-            app:layout_constraintBottom_toTopOf="@+id/extendedFloatingActionButton"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
+            app:layout_constraintBottom_toTopOf="@+id/checkoutExtendedFloatingActionButton"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent" />
@@ -69,7 +70,7 @@
             android:layout_marginEnd="24dp"
             android:fontFamily="@font/roboto_medium"
             android:text="@string/price_example_text"
-            android:textSize="20sp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
             app:layout_constraintBaseline_toBaselineOf="@+id/totalTextTextView"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"

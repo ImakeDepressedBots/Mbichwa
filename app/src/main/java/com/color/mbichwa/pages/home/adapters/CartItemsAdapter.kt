@@ -12,8 +12,13 @@ import com.bumptech.glide.request.RequestOptions
 import com.color.mbichwa.R
 import com.color.mbichwa.pages.home.models.OrderedProduct
 
-class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<CartItemsAdapter.CartItemViewHolder>() {
+class CartItemsAdapter(var cartItems:List<OrderedProduct>, onItemDeletedListener: OnItemDeletedListener):RecyclerView.Adapter<CartItemsAdapter.CartItemViewHolder>() {
 
+    interface OnItemDeletedListener{
+        fun onItemDeleted(orderedProduct: OrderedProduct)
+    }
+
+    val deleteItemListener: OnItemDeletedListener = onItemDeletedListener
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CartItemViewHolder {
@@ -28,7 +33,7 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
 
     override fun onBindViewHolder(holder: CartItemViewHolder, position: Int) {
         val item = cartItems[position]
-        holder.bind(item)
+        holder.bind(item,deleteItemListener)
     }
 
     class CartItemViewHolder(itemView:View):RecyclerView.ViewHolder(itemView){
@@ -40,7 +45,7 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
 //        val itemInCartOptionTextView:TextView = itemView.findViewById(R.id.itemInCartOptionTextView)
         val itemInCartPriceTextView:TextView = itemView.findViewById(R.id.itemInCartPriceTextView)
 
-        fun bind(item:OrderedProduct){
+        fun bind(item:OrderedProduct,deletedListener: OnItemDeletedListener){
             Glide.with(itemView.context).load(item.orderedProductImageUrl)
                 .apply(RequestOptions().circleCrop())
                 .into(cartItemImageView)
@@ -49,6 +54,10 @@ class CartItemsAdapter(var cartItems:List<OrderedProduct>):RecyclerView.Adapter<
 //            itemInCartOptionTextView.text = item.orderedProductOption
             itemInCartPriceTextView.text = item.orderedProductPrice.toString()
             itemInCartQuantityTextView.text = item.orderedProductQuantity.toString()
+
+            removeImageButton.setOnClickListener {
+                deletedListener.onItemDeleted(item)
+            }
         }
     }
 }

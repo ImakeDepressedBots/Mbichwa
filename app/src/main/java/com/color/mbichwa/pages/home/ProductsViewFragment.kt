@@ -57,9 +57,6 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
         bottomAppBar.replaceMenu(R.menu.bottom_app_bar_menu)
         bottomAppBar.setOnMenuItemClickListener { item ->
             when(item.itemId){
-                R.id.app_bar_fav -> {
-                    true
-                }
                 R.id.app_bar_search -> {
                     true
                 }

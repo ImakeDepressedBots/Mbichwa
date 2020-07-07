@@ -58,9 +58,6 @@ class HomeFragment : Fragment() ,
         bottomBar.replaceMenu(R.menu.bottom_app_bar_menu)
         bottomBar.setOnMenuItemClickListener { item ->
             when(item.itemId){
-                R.id.app_bar_fav -> {
-                    true
-                }
                 R.id.app_bar_search -> {
                     true
                 }

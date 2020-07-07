@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentCartBinding
 import com.color.mbichwa.pages.home.adapters.CartItemsAdapter
@@ -24,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [CartFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CartFragment : Fragment() {
+class CartFragment : Fragment(), CartItemsAdapter.OnItemDeletedListener {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -57,7 +59,15 @@ class CartFragment : Fragment() {
 //        })
 
         cartItems = ArrayList()
-        binding.extendedFloatingActionButton.setOnClickListener {
+
+
+        binding.checkoutExtendedFloatingActionButton.setOnClickListener {
+            if (cartItems.isEmpty()){
+                Toast.makeText(context,"Add Items To Cart",Toast.LENGTH_SHORT).show()
+            }else{
+                val actionCheckoutFragment = CartFragmentDirections.actionCartFragmentToCheckoutFragment()
+                findNavController().navigate(actionCheckoutFragment)
+            }
 
         }
 
@@ -73,18 +83,19 @@ class CartFragment : Fragment() {
             if (it != null){
                 cartItems = it
                 Timber.e("This is it")
-                var prices: List<Double> = emptyList()
+                var prices: ArrayList<Double> = ArrayList()
 
                 for (cartItem in cartItems) {
-                    prices.plus(cartItem.orderedProductPrice)
+                    prices.add(cartItem.orderedProductPrice)
                 }
                 val totalPrice: Double = prices.sum()
                 binding.totalValueTextView.text = totalPrice.toString()
                 cartAdapter =
                     CartItemsAdapter(
-                        cartItems
+                        cartItems,this
                     )
                 binding.cartItemsRecyclerView.adapter = cartAdapter
+                cartAdapter.notifyDataSetChanged()
             }else {
                 Timber.e("There are no items in the viewModel :|")
             }
@@ -115,5 +126,11 @@ class CartFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onItemDeleted(orderedProduct: OrderedProduct) {
+        viewModel.removeItemFromCart(orderedProduct)
+//        cartItems.remove(orderedProduct)
+        cartAdapter.notifyDataSetChanged()
     }
 }

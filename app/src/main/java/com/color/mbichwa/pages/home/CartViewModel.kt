@@ -25,6 +25,11 @@ class CartViewModel:ViewModel() {
         cartItems.notifyObserver()
     }
 
+    fun removeItemFromCart(orderedProduct: OrderedProduct){
+        cartItems.value?.remove(orderedProduct)
+        cartItems.notifyObserver()
+    }
+
     private fun <T> MutableLiveData<T>.notifyObserver() {
         this.value = this.value
     }

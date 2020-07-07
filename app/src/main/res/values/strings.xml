@@ -15,7 +15,14 @@
     <string name="search_item_title_text">Search</string>
     <string name="gummies_in_space_text">Gummies in space</string>
     <string name="price_example_text">$19.84</string>
+    <string name="price_total_example_text">$39.68</string>
     <string name="_1_packet_text">1 Packet</string>
-    <string name="checkout_text">Checkout</string>
     <string name="total_text">Total</string>
+    <string name="Image_view_description_for_display_images">ImageView for the product display Image items</string>
+    <string name="checkout_text">Checkout</string>
+    <string name="delivery_location_text">Delivery Location</string>
+    <string name="payment_method_text">Payment Method</string>
+    <string name="subtotal_text">Subtotal</string>
+    <string name="shipping_text">Shipping</string>
+    <string name="view_cart_text">View Cart \u2192</string>
 </resources>
