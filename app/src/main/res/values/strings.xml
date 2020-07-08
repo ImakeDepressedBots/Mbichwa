@@ -25,4 +25,5 @@
     <string name="subtotal_text">Subtotal</string>
     <string name="shipping_text">Shipping</string>
     <string name="view_cart_text">View Cart \u2192</string>
+    <string name="cart_text">Cart</string>
 </resources>
