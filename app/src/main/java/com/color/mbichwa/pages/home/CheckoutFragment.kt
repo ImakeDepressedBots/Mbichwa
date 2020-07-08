@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RadioButton
 import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
@@ -109,7 +110,26 @@ class CheckoutFragment : Fragment() {
             }
 
         })
+
+
         return binding.root
+    }
+
+    fun onRadioButtonClicked(view:View){
+        if (view is RadioButton){
+            val checked = view.isChecked
+
+            when(view.id){
+                R.id.mpesaRadioButton ->
+                    if (checked){
+
+                    }
+                R.id.cardRadioButton ->
+                    if (checked){
+
+                    }
+            }
+        }
     }
 
     private fun checkPermissionForLocation() {

@@ -263,6 +263,7 @@
             app:layout_constraintTop_toBottomOf="@+id/paymentMethodTextTextView">
 
             <RadioButton
+                android:id="@+id/mpesaRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -272,6 +273,7 @@
                 android:text="Mpesa" />
 
             <RadioButton
+                android:id="@+id/cardRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -280,6 +282,7 @@
                 android:text="Debit/Credit Card" />
 
             <RadioButton
+                android:id="@+id/paypalRadioButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
