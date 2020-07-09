@@ -27,4 +27,5 @@
     <string name="view_cart_text">View Cart \u2192</string>
     <string name="cart_text">Cart</string>
     <string name="place_order_text">Place Order</string>
+    <string name="location_not_set_text">Delivery location not set</string>
 </resources>

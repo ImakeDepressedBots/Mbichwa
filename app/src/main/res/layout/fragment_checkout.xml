@@ -21,7 +21,8 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="24dp"
             android:text="@string/checkout_text"
-            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+            android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -167,19 +168,34 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <TextView
+                    android:id="@+id/selectedLocationNameTextView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Your Selected Location"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                    app:layout_constraintBottom_toTopOf="@+id/currentLocationTextTextView"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
                 <TextView
                     android:id="@+id/currentLocationTextTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="32dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginBottom="8dp"
                     android:text="Current Location"
                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                     app:layout_constraintBottom_toTopOf="@+id/searchLocationEditText"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toBottomOf="@+id/selectedLocationNameTextView" />
 
                 <Switch
                     android:id="@+id/currentLocationSwitch"
@@ -194,9 +210,10 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="8dp"
                     android:layout_marginEnd="8dp"
                     android:layout_marginBottom="8dp"
+                    android:focusable="false"
                     android:hint="Search Delivery Location"
                     app:layout_constraintBottom_toTopOf="@+id/pickOnMapTextTextView"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -251,7 +268,7 @@
             app:layout_constraintTop_toBottomOf="@+id/locationDetailsCardView" />
 
         <RadioGroup
-            android:id="@+id/radioGroup"
+            android:id="@+id/paymentOptionsRadioGroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -269,7 +286,6 @@
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
                 android:checked="true"
-                android:onClick="onRadioButtonClicked"
                 android:text="Mpesa" />
 
             <RadioButton
@@ -278,17 +294,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
                 android:layout_marginEnd="5dp"
-                android:onClick="onRadioButtonClicked"
                 android:text="Debit/Credit Card" />
 
-            <RadioButton
-                android:id="@+id/paypalRadioButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="10dp"
-                android:onClick="onRadioButtonClicked"
-                android:text="PayPal" />
+<!--            <RadioButton-->
+<!--                android:id="@+id/paypalRadioButton"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginStart="5dp"-->
+<!--                android:layout_marginEnd="10dp"-->
+<!--                android:text="PayPal" />-->
 
         </RadioGroup>
 
@@ -302,7 +316,7 @@
             app:cardCornerRadius="10dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+            app:layout_constraintTop_toBottomOf="@+id/paymentOptionsRadioGroup">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/mpesaDetailsConstraintLayout"
