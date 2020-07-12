@@ -57,17 +57,19 @@ class SignUpTwoFragment : Fragment() {
 
     private fun createUser(){
         val navController = findNavController()
-        FirebaseApp.initializeApp(context!!.applicationContext)
+        FirebaseApp.initializeApp(requireContext().applicationContext)
         auth = Firebase.auth
-        val email  = viewModel.email.value.toString()
-        auth.createUserWithEmailAndPassword(email,binding.passwordConfirmEditText.text.toString())
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful){
-                    navController.popBackStack(R.id.homeFragment,true)
-                } else{
+        val email  = viewModel.email.value
+        if (email != null) {
+            auth.createUserWithEmailAndPassword(email,binding.passwordConfirmEditText.text.toString())
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful){
+                        navController.popBackStack(R.id.homeFragment,true)
+                    } else{
 
+                    }
                 }
-            }
+        }
     }
 
     companion object {

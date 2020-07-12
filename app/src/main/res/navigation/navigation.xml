@@ -103,7 +103,31 @@
         android:id="@+id/checkoutFragment"
         android:name="com.color.mbichwa.pages.home.CheckoutFragment"
         android:label="fragment_checkout"
-        tools:layout="@layout/fragment_checkout" />
+        tools:layout="@layout/fragment_checkout" >
+
+<!--        <argument-->
+<!--            android:name="mapLocation"-->
+<!--            android:defaultValue=""-->
+<!--            app:nullable="true"-->
+<!--            app:argType=""/>-->
+        <action
+            android:id="@+id/action_checkoutFragment_to_checkoutMapFragment"
+            app:destination="@id/checkoutMapFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/checkoutMapFragment"
+        android:name="com.color.mbichwa.pages.home.CheckoutMapFragment"
+        android:label="fragment_checkout_map"
+        tools:layout="@layout/fragment_checkout_map" >
+        <action
+            android:id="@+id/action_checkoutMapFragment_to_checkoutFragment"
+            app:destination="@id/checkoutFragment" >
+<!--            <argument-->
+<!--                android:name="mapLocation"-->
+<!--                android:defaultValue=""-->
+<!--                app:argType=""/>-->
+        </action>
+    </fragment>
 
 
 </navigation>

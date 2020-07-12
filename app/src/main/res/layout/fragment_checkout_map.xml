@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".pages.home.CheckoutMapFragment">
+
+    <fragment
+        android:id="@+id/location_selecting_map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:layout_width="30dp"
+        android:src="@drawable/pin"
+        android:layout_centerInParent="true"
+        android:translationY="-22.5dp"
+        android:layout_height="45dp"
+        android:contentDescription="Image for location pin" />
+
+</layout>

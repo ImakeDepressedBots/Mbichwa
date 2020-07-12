@@ -21,6 +21,7 @@ import androidx.lifecycle.Observer
 import com.color.mbichwa.ApiKeys
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentCheckoutBinding
+import com.color.mbichwa.pages.home.models.Order
 import com.color.mbichwa.pages.home.models.OrderedProduct
 import com.google.android.gms.common.api.ResolvableApiException
 import com.google.android.gms.location.*
@@ -30,6 +31,10 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.GeoPoint
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import timber.log.Timber
 
 // TODO: Rename parameter arguments, choose names that match
@@ -60,6 +65,7 @@ class CheckoutFragment : Fragment() {
     private val cartViewModel: CartViewModel by activityViewModels()
 
     private lateinit var cartItems: ArrayList<OrderedProduct>
+    private lateinit var orderItem:Order
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +82,7 @@ class CheckoutFragment : Fragment() {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_checkout, container, false)
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this.requireContext())
+        orderItem = Order()
         if (context?.let {
                 ActivityCompat.checkSelfPermission(
                     it,
@@ -160,6 +167,7 @@ class CheckoutFragment : Fragment() {
         cartViewModel.cartItems.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 cartItems = it
+                orderItem.orderItems = cartItems
 
                 var prices: ArrayList<Double> = ArrayList()
 
@@ -168,6 +176,7 @@ class CheckoutFragment : Fragment() {
                 }
                 val totalPrice: Double = prices.sum()
                 binding.subTotalActualTextView.text = totalPrice.toString()
+                orderItem.orderAmount = totalPrice.toString()
             }
 
         })
@@ -190,6 +199,7 @@ class CheckoutFragment : Fragment() {
                     .addOnSuccessListener { location: Location? ->
                         if (location != null){
                             currentLocation = location
+                            orderItem.deriveryLocation = GeoPoint(location.latitude,location.longitude)
                             val geocoder:Geocoder = Geocoder(context)
                             val addresses = geocoder.getFromLocation(location.latitude,location.longitude,5)
                             if (addresses.size > 0){
@@ -212,7 +222,31 @@ class CheckoutFragment : Fragment() {
             startActivityForResult(intent, AUTOCOMPLETE_REQUEST_CODE)
         }
 
+        binding.PlaceOrderExtendedFloatingActionButton.setOnClickListener {
+            postOrdertoDb()
+        }
+
         return binding.root
+    }
+
+    private fun postOrdertoDb() {
+        prepareOrder()
+        val db = Firebase.firestore
+        val user  = FirebaseAuth.getInstance().currentUser
+        db.collection("orders").add(orderItem)
+            .addOnSuccessListener { documentReference ->
+                db.collection("orders").document(documentReference.id).update("orderId",documentReference.id).addOnSuccessListener {
+                    db.collection("users").document(user!!.uid).collection("customerorders").document(documentReference.id)
+                        .set(orderItem).addOnSuccessListener {
+                            Toast.makeText(context,documentReference.id,Toast.LENGTH_SHORT).show()
+                        }
+                }
+            }
+    }
+
+    private fun prepareOrder() {
+        val user  = FirebaseAuth.getInstance().currentUser
+        orderItem.customerId = user!!.uid
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -244,6 +278,7 @@ class CheckoutFragment : Fragment() {
                     data?.let {
                         val place = Autocomplete.getPlaceFromIntent(data)
                         binding.selectedLocationNameTextView.text = place.name
+                        orderItem.deriveryLocation = GeoPoint(place.latLng!!.latitude,place.latLng!!.longitude)
                     }
                 }
                 AutocompleteActivity.RESULT_ERROR ->{
