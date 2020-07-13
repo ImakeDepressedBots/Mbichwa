@@ -2,13 +2,19 @@ package com.color.mbichwa.pages.home
 
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.color.mbichwa.ActionBarTitleViewModel
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentHomeBinding
 import com.color.mbichwa.pages.home.adapters.CategoriesAdapter
@@ -38,6 +44,7 @@ class HomeFragment : Fragment() ,
     private lateinit var binding: FragmentHomeBinding
     lateinit var categoryData: ArrayList<Category>
     private lateinit var adapter: CategoriesAdapter
+    private val actionBarTitleViewModel:ActionBarTitleViewModel by activityViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +61,9 @@ class HomeFragment : Fragment() ,
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_home, container, false)
+
         val bottomBar:BottomAppBar = binding.bottomBar
+        val drawerLayout:DrawerLayout  = requireActivity().findViewById(R.id.drawer_layout)
         bottomBar.replaceMenu(R.menu.bottom_app_bar_menu)
         bottomBar.setOnMenuItemClickListener { item ->
             when(item.itemId){
@@ -65,7 +74,7 @@ class HomeFragment : Fragment() ,
             }
         }
         bottomBar.setNavigationOnClickListener {
-
+            drawerLayout.openDrawer(GravityCompat.START)
         }
         getCategoryData()
         binding.cartFab.setOnClickListener {
@@ -93,6 +102,11 @@ class HomeFragment : Fragment() ,
                     )
                 binding.categoriesRecycler.adapter = adapter
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        actionBarTitleViewModel.updateActionBarTitle("Home")
     }
 
     override fun onCategorySelected(category: Category) {

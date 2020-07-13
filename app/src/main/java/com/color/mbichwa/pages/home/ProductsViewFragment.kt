@@ -6,8 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import com.color.mbichwa.ActionBarTitleViewModel
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentProductsViewBinding
 import com.color.mbichwa.pages.home.adapters.ProductsAdapter
@@ -36,6 +41,9 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
     lateinit var productsData:ArrayList<Product>
     private lateinit var adapter: ProductsAdapter
 
+    private val actionBarTitleViewModel: ActionBarTitleViewModel by activityViewModels()
+
+
     private lateinit var categoryName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,6 +62,7 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
         binding =  DataBindingUtil.inflate(inflater,R.layout.fragment_products_view,container,false)
 
         val bottomAppBar:BottomAppBar = binding.bottomBar
+        val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
         bottomAppBar.replaceMenu(R.menu.bottom_app_bar_menu)
         bottomAppBar.setOnMenuItemClickListener { item ->
             when(item.itemId){
@@ -64,7 +73,7 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
             }
         }
         bottomAppBar.setNavigationOnClickListener {
-
+            drawerLayout.openDrawer(GravityCompat.START)
         }
         binding.cartFab.setOnClickListener {
             val actionCartFragment = ItemsViewFragmentDirections.actionItemsViewFragmentToCartFragment()
@@ -75,9 +84,8 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         categoryName = arguments?.get("categoryName") as String
-        activity?.actionBar?.title = categoryName
+        actionBarTitleViewModel.updateActionBarTitle(categoryName)
 //        supportActionBar?.title = categoryName
 //        Toast.makeText(context,categoryName,Toast.LENGTH_SHORT).show()
         getProductsData()

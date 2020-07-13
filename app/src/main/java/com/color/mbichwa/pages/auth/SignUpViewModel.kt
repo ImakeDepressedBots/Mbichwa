@@ -13,17 +13,26 @@ class SignUpViewModel: ViewModel() {
     val email:LiveData<String>
         get() = _email
 
+    private val _userName = MutableLiveData<String>()
+
+    val userName:LiveData<String>
+        get() = _userName
+
 
     val password = MutableLiveData<String>()
 
 
     init {
         _email.value = ""
+        _userName.value = ""
         Timber.i("GameViewModel created!")
     }
 
     fun setEmail(emailText:String){
         _email.postValue(emailText)
+    }
+    fun setUserName(nameText:String){
+        _userName.postValue(nameText)
     }
 
     fun setPassword(passwordText:String){

@@ -18,6 +18,7 @@ import androidx.core.app.ActivityCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.ApiKeys
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentCheckoutBinding
@@ -31,6 +32,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.AutocompleteActivity
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.firestore.ktx.firestore
@@ -66,6 +68,7 @@ class CheckoutFragment : Fragment() {
 
     private lateinit var cartItems: ArrayList<OrderedProduct>
     private lateinit var orderItem:Order
+    private var deliveryPrice = 150.0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -174,22 +177,31 @@ class CheckoutFragment : Fragment() {
                 for (cartItem in cartItems) {
                     prices.add(cartItem.orderedProductPrice)
                 }
-                val totalPrice: Double = prices.sum()
-                binding.subTotalActualTextView.text = totalPrice.toString()
-                orderItem.orderAmount = totalPrice.toString()
+                val totalCartPrice: Double = prices.sum()
+                binding.subTotalActualTextView.text = totalCartPrice.toString()
+                var totalOrderPrice = totalCartPrice + deliveryPrice
+                binding.totalActualTextView.text = totalOrderPrice.toString()
+                binding.shippingActualTextView.text = deliveryPrice.toString()
+                orderItem.orderAmount = totalOrderPrice.toString()
             }
 
         })
+        binding.viewCartTextView.setOnClickListener {
+            val actionCartBottomSheet = CheckoutFragmentDirections.actionCheckoutFragmentToCartBottomSheet()
+            findNavController().navigate(actionCartBottomSheet)
+        }
 
         binding.paymentOptionsRadioGroup.setOnCheckedChangeListener { group, checkedId ->
             when(checkedId){
                 R.id.mpesaRadioButton -> {
                     binding.mpesaDetailsConstraintLayout.visibility = View.VISIBLE
                     binding.cardDetailsConstraintLayout.visibility = View.GONE
+                    orderItem.paymentMethod = "Mpesa"
                 }
                 R.id.cardRadioButton -> {
                     binding.mpesaDetailsConstraintLayout.visibility = View.GONE
                     binding.cardDetailsConstraintLayout.visibility = View.VISIBLE
+                    orderItem.paymentMethod = "Card"
                 }
             }
         }
@@ -224,6 +236,7 @@ class CheckoutFragment : Fragment() {
 
         binding.PlaceOrderExtendedFloatingActionButton.setOnClickListener {
             postOrdertoDb()
+            binding.loadingScreen.visibility = View.VISIBLE
         }
 
         return binding.root
@@ -239,6 +252,9 @@ class CheckoutFragment : Fragment() {
                     db.collection("users").document(user!!.uid).collection("customerorders").document(documentReference.id)
                         .set(orderItem).addOnSuccessListener {
                             Toast.makeText(context,documentReference.id,Toast.LENGTH_SHORT).show()
+                            binding.loadingScreen.visibility = View.GONE
+                            val actionHome = CheckoutFragmentDirections.actionCheckoutFragmentToHomeFragment()
+                            findNavController().navigate(actionHome)
                         }
                 }
             }
@@ -247,6 +263,8 @@ class CheckoutFragment : Fragment() {
     private fun prepareOrder() {
         val user  = FirebaseAuth.getInstance().currentUser
         orderItem.customerId = user!!.uid
+        orderItem.orderState = "Ordered"
+        orderItem.orderTime = Timestamp.now()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -4,15 +4,38 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import androidx.activity.viewModels
+import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.navigation.NavigationView
+import com.google.firebase.auth.FirebaseAuth
 
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        val viewModel: ActionBarTitleViewModel by viewModels()
         val navController = findNavController(R.id.myNavHostFragment)
+        checkFirstRun()
+        val drawerLayout:DrawerLayout = findViewById(R.id.drawer_layout)
+        val appBarConfiguration  = AppBarConfiguration(navController.graph,drawerLayout)
+        val navigationView:NavigationView = findViewById(R.id.nav_view)
+        val headerView: View = navigationView.getHeaderView(0)
+        val userNameTextView:TextView = headerView.findViewById(R.id.userNameTextView)
+        val userEmailTextView:TextView = headerView.findViewById(R.id.userEmailTextView)
+        val user = FirebaseAuth.getInstance().currentUser
+        if (user != null) {
+            userNameTextView.text = user.displayName
+            userEmailTextView.text = user.email
+        }
+        findViewById<NavigationView>(R.id.nav_view)
+            .setupWithNavController(navController)
         navController.addOnDestinationChangedListener { controller, destination, arguments ->
             when(destination.id){
 
@@ -20,9 +43,14 @@ class MainActivity : AppCompatActivity() {
                 R.id.signUpTwoFragment -> supportActionBar?.hide()
                 R.id.cartFragment -> supportActionBar?.hide()
                 R.id.productViewMainFragment -> supportActionBar?.hide()
+                R.id.homeFragment -> supportActionBar?.show()
+                R.id.itemsViewFragment -> supportActionBar?.show()
             }
         }
-        checkFirstRun()
+        viewModel.title.observe(this, Observer {
+            supportActionBar?.title = it
+        })
+
     }
 
     private fun checkFirstRun(){

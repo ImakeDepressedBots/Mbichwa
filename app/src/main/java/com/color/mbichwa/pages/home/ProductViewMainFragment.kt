@@ -12,7 +12,9 @@ import android.widget.LinearLayout
 import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.databinding.DataBindingUtil
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
@@ -25,6 +27,7 @@ import com.color.mbichwa.pages.home.adapters.ProductOptionAdapter
 import com.color.mbichwa.pages.home.models.OrderedProduct
 import com.color.mbichwa.pages.home.models.Product
 import com.color.mbichwa.pages.home.models.ProductOption
+import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -93,6 +96,8 @@ class ProductViewMainFragment : Fragment(), ProductOptionAdapter.OnProductOption
         binding =
             DataBindingUtil.inflate(inflater, R.layout.fragment_product_view_main, container, false)
         orderedProduct = OrderedProduct()
+        val bottomAppBar: BottomAppBar = binding.bottomBar
+        val drawerLayout: DrawerLayout = requireActivity().findViewById(R.id.drawer_layout)
 //        val quantityPicker:NumberPicker = binding.quantityPicker
 //        quantityPicker.minValue = 1
 //        quantityPicker.maxValue = 10
@@ -102,6 +107,9 @@ class ProductViewMainFragment : Fragment(), ProductOptionAdapter.OnProductOption
 //            binding.priceTextView.text = "KES ${newVal*100}"
 //            orderedProduct.orderedProductQuantity = newVal
 //        }
+        bottomAppBar.setNavigationOnClickListener {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
         binding.addImageButton.setOnClickListener {
             addItemsQuantity()
         }

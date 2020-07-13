@@ -7,13 +7,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.color.mbichwa.R
 import com.color.mbichwa.databinding.FragmentSignUpTwoBinding
 import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.ktx.Firebase
 
 // TODO: Rename parameter arguments, choose names that match
@@ -32,8 +36,10 @@ class SignUpTwoFragment : Fragment() {
     private var param2: String? = null
 
     private lateinit var binding: FragmentSignUpTwoBinding
-    private lateinit var viewModel: SignUpViewModel
+    private val viewModel: SignUpViewModel by activityViewModels()
     private lateinit var auth: FirebaseAuth
+    private lateinit var email:String
+    private lateinit var userName:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,8 +55,15 @@ class SignUpTwoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         binding = DataBindingUtil.inflate(inflater,R.layout.fragment_sign_up_two, container, false)
-        viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-        Toast.makeText(context,viewModel.email.value.toString(),Toast.LENGTH_SHORT).show()
+        email = String()
+        userName = String()
+        viewModel.email.observe(viewLifecycleOwner, Observer {
+            email = it
+            Toast.makeText(context,email,Toast.LENGTH_SHORT).show()
+        })
+        viewModel.userName.observe(viewLifecycleOwner, Observer {
+            userName = it
+        })
         binding.doneFloatingActionButton.setOnClickListener { createUser() }
         return binding.root
     }
@@ -58,18 +71,26 @@ class SignUpTwoFragment : Fragment() {
     private fun createUser(){
         val navController = findNavController()
         FirebaseApp.initializeApp(requireContext().applicationContext)
+        val userEmail = email
         auth = Firebase.auth
-        val email  = viewModel.email.value
-        if (email != null) {
             auth.createUserWithEmailAndPassword(email,binding.passwordConfirmEditText.text.toString())
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful){
-                        navController.popBackStack(R.id.homeFragment,true)
+                        val user: FirebaseUser? = task.result?.user
+                        val profileUpdates = userProfileChangeRequest {
+                            displayName = userName
+                        }
+                        user?.updateProfile(profileUpdates)
+                            ?.addOnCompleteListener {
+                                if (task.isSuccessful){
+                                    navController.navigate(R.id.action_global_homeFragment)
+                                }
+                            }
                     } else{
 
                     }
                 }
-        }
+
     }
 
     companion object {

@@ -87,6 +87,9 @@
             android:name="com.color.mbichwa.pages.auth.SignUpTwoFragment"
             android:label="fragment_sign_up_two"
             tools:layout="@layout/fragment_sign_up_two" />
+        <action
+            android:id="@+id/action_global_homeFragment"
+            app:destination="@id/homeFragment" />
 
 
     </navigation>
@@ -113,6 +116,12 @@
         <action
             android:id="@+id/action_checkoutFragment_to_checkoutMapFragment"
             app:destination="@id/checkoutMapFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+        <action
+            android:id="@+id/action_checkoutFragment_to_cartBottomSheet"
+            app:destination="@id/cartBottomSheet" />
     </fragment>
     <fragment
         android:id="@+id/checkoutMapFragment"
@@ -128,6 +137,10 @@
 <!--                app:argType=""/>-->
         </action>
     </fragment>
+    <fragment
+        android:id="@+id/cartBottomSheet"
+        android:name="com.color.mbichwa.pages.home.CartBottomSheet"
+        android:label="CartBottomSheet" />
 
 
 </navigation>
