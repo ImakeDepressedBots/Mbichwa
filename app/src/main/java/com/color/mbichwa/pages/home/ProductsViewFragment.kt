@@ -86,6 +86,7 @@ class ItemsViewFragment : Fragment() , ProductsAdapter.OnProductSelectedListener
         super.onViewCreated(view, savedInstanceState)
         categoryName = arguments?.get("categoryName") as String
         actionBarTitleViewModel.updateActionBarTitle(categoryName)
+        binding.categoryNameTextView.text = categoryName
 //        supportActionBar?.title = categoryName
 //        Toast.makeText(context,categoryName,Toast.LENGTH_SHORT).show()
         getProductsData()

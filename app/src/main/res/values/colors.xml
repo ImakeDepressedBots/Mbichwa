@@ -5,4 +5,10 @@
     <color name="colorAccent">#03DAC5</color>
     <color name="fabBackground">#ffffff</color>
     <color name="iconColor">#000000</color>
+
+    <color name="colorMain">#14ac54</color>
+    <color name="colorMain2">#8bf018</color>
+    <color name="colorMain3">#68af25</color>
+    <color name="colorSecondary">#c90c2c</color>
+
 </resources>
